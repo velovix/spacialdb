@@ -1,0 +1,18 @@
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+  version="2.5">
+
+  <display-name>Spacial DB</display-name>
+
+  <servlet>
+    <servlet-name>RESTServlet</servlet-name>
+    <servlet-class>com.tylerscodebase.spacialdb.server.RESTServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>RESTServlet</servlet-name>
+    <url-pattern>/rest</url-pattern>
+  </servlet-mapping>
+
+</web-app>
