@@ -7,7 +7,7 @@
 
   <servlet>
     <servlet-name>RESTServlet</servlet-name>
-    <servlet-class>com.tylerscodebase.spacialdb.server.RESTServlet</servlet-class>
+    <servlet-class>com.tylerscodebase.spatialdb.server.RESTServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>

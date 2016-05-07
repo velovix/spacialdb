@@ -1,9 +1,9 @@
-package com.tylerscodebase.spacialdb.server;
+package com.tylerscodebase.spatialdb.server;
 
 import java.util.ArrayList;
 
 /**
- * Lexes spacial database query statements.
+ * Lexes spatial database query statements.
  */
 public class Lexer {
 

@@ -4,12 +4,12 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <artifactId>spacialdb</artifactId>
-    <groupId>com.tylerscodebase.spacialdb</groupId>
+    <artifactId>spatialdb</artifactId>
+    <groupId>com.tylerscodebase.spatialdb</groupId>
     <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <groupId>com.tylerscodebase.spacialdb</groupId>
+  <groupId>com.tylerscodebase.spatialdb</groupId>
   <artifactId>server</artifactId>
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>

@@ -1,4 +1,4 @@
-package com.tylerscodebase.spacialdb.server;
+package com.tylerscodebase.spatialdb.server;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

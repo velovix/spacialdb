@@ -1,4 +1,4 @@
-package com.tylerscodebase.spacialdb.server;
+package com.tylerscodebase.spatialdb.server;
 
 public class Circle implements Shape {
 

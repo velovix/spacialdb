@@ -1,4 +1,4 @@
-package com.tylerscodebase.spacialdb.server;
+package com.tylerscodebase.spatialdb.server;
 
 import javax.json.*;
 
@@ -7,11 +7,11 @@ import javax.json.*;
  */
 public class ExecutionReport {
 
-    private String data;
+    private ExecutionReportData data;
     private String info;
     private String error;
 
-    public ExecutionReport(String data, String info, String error) {
+    public ExecutionReport(ExecutionReportData data, String info, String error) {
         this.data = data;
         this.info = info;
         this.error = error;
@@ -21,7 +21,7 @@ public class ExecutionReport {
      * Returns the data that the action requested, if any.
      * @return data
      */
-    public String getData() {
+    public ExecutionReportData getData() {
         return data;
     }
 
@@ -50,7 +50,7 @@ public class ExecutionReport {
      */
     public String getJSON() {
         return Json.createObjectBuilder()
-            .add("data", data)
+            .add("data", data.getJSON())
             .add("info", info)
             .add("error", error)
             .build()

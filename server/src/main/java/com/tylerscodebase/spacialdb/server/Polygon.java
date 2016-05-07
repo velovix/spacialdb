@@ -1,4 +1,4 @@
-package com.tylerscodebase.spacialdb.server;
+package com.tylerscodebase.spatialdb.server;
 
 import java.util.ArrayList;
 
@@ -24,6 +24,10 @@ public class Polygon implements Shape {
                 lines.add(new Line(coords.get(i), coords.get(i+1), coords.get(0), coords.get(1)));
             }
         }
+    }
+
+    public ArrayList<Point> getPoints() {
+        return points;
     }
 
     public ArrayList<Line> getLines() {

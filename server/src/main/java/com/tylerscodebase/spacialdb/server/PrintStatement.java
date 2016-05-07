@@ -1,4 +1,4 @@
-package com.tylerscodebase.spacialdb.server;
+package com.tylerscodebase.spatialdb.server;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ public class PrintStatement implements Statement {
      */
     public PrintStatement() {
         expectedTokens = new Token.TokenType[]{Token.TokenType.KEYWORD, Token.TokenType.STRING};
-        isOptional = new boolean[]{true, false};
+        isOptional = new boolean[]{true, true};
         currExpectedToken = 0;
     }
 
@@ -99,9 +99,10 @@ public class PrintStatement implements Statement {
      */
     public void giveDefault() {
         if (nextExpectedTokenType() == Token.TokenType.STRING) {
-            throw new RuntimeException("attempt to give the default value to a mandatory parameter");
+            name = null;
+            currExpectedToken++;
         } else if (nextExpectedTokenType() == Token.TokenType.TUPLES) {
-            throw new RuntimeException("attempt to give the default value to a mandatory parameter");
+            throw new RuntimeException("attempt to give the default value to a non-existant parameter");
         } else if (nextExpectedTokenType() == Token.TokenType.KEYWORD) {
             type = "shape";
             currExpectedToken++;

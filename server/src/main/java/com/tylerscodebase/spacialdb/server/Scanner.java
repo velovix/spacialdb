@@ -1,9 +1,9 @@
-package com.tylerscodebase.spacialdb.server;
+package com.tylerscodebase.spatialdb.server;
 
 import java.util.ArrayList;
 
 /**
- * The scanner for spacial database queries.
+ * The scanner for spatial database queries.
  */
 class Scanner {
 

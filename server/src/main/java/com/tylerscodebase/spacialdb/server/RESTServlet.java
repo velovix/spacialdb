@@ -1,4 +1,4 @@
-package com.tylerscodebase.spacialdb.server;
+package com.tylerscodebase.spatialdb.server;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -49,6 +49,9 @@ public class RESTServlet extends HttpServlet {
             lexer.parseTokens();
             // Parse the tokens
             parser.parse();
+            // Statements cannot span multiple requests, so the user is
+            // finished entering input
+            parser.truncateStatement();
             // Execute the finished statement
             ExecutionReport report = environment.execute(parser.getStatement());
             // Send the results
@@ -57,7 +60,7 @@ public class RESTServlet extends HttpServlet {
             System.out.println("Sent: " + report.getJSON());
         } catch (ParseException e) {
             // The user entered an invalid statement
-            ExecutionReport report = new ExecutionReport("", "A parsing error has occurred", e.getMessage());
+            ExecutionReport report = new ExecutionReport(new EmptyReportData(), "A parsing error has occurred", e.getMessage());
             // Send the results
             resp.setContentType("application/json");
             resp.getWriter().println(report.getJSON());

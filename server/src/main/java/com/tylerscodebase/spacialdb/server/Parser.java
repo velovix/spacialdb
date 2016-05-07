@@ -1,9 +1,9 @@
-package com.tylerscodebase.spacialdb.server;
+package com.tylerscodebase.spatialdb.server;
 
 import java.util.ArrayList;
 
 /**
- * Implements a parser for spacial database queries.
+ * Implements a parser for spatial database queries.
  */
 @SuppressWarnings("unchecked")
 public class Parser {
@@ -172,6 +172,31 @@ public class Parser {
         } else {
             return null;
         }
+    }
+
+    /**
+     * Attempts to finish construction of the statement even if the statement
+     * could accept additional tokens. In some cases, this will lead to a
+     * completely valid statement. If not, a parse exception is thrown. This
+     * method should be called if the interface is given some kind of
+     * indication that the user does not intend to give any more input.
+     */
+    public void truncateStatement() throws ParseException {
+        System.out.println("looks to me like a statement is being truncated");
+        if (lexer.nextToken() != null) {
+            // This method should only be used if all the lexer tokens have
+            // been exausted
+            throw new RuntimeException("attempt to truncate a statement before all lexer tokens have been used");
+        }
+
+        while (statement.nextExpectedTokenType() != null) {
+            if (!statement.isNextExpectedTokenOptional()) {
+                throw new ParseException("unexpected end of input");
+            }
+            statement.giveDefault();
+        }
+
+        System.out.println("Result: " + statement.nextExpectedTokenType());
     }
 
     /**

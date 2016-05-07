@@ -1,4 +1,4 @@
-package com.tylerscodebase.spacialdb.server;
+package com.tylerscodebase.spatialdb.server;
 
 @SuppressWarnings("serial")
 public class ParseException extends Exception {
