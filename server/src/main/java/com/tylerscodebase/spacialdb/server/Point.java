@@ -1,6 +1,6 @@
 package com.tylerscodebase.spatialdb.server;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a single point.
@@ -37,6 +37,24 @@ public class Point implements Shape {
      */
     public double getY() {
         return y;
+    }
+
+    /**
+     * Calculates the dot product of the two points.
+     * @param p point to calculate the dot product with
+     * @return dot product
+     */
+    public double dotProduct(Point p) {
+        return x * p.x + y * p.y;
+    }
+
+    /**
+     * Calculates the distance between this point and the given point.
+     * @param p point to calculate the distance from
+     * @return distance
+     */
+    public double distance(Point p) {
+        return Math.sqrt(Math.pow(p.x - x, 2) + Math.pow(p.y -  y, 2));
     }
 
     /**
@@ -84,7 +102,7 @@ public class Point implements Shape {
                 double dxc = getX() - line.getP1().getX();
                 double dyc = getY() - line.getP1().getY();
                 double dx1 = line.getP2().getX() - line.getP1().getX();
-                double dy1 = line.getP1().getY() - line.getP1().getY();
+                double dy1 = line.getP2().getY() - line.getP1().getY();
 
                 double cross = dxc * dy1 - dyc * dx1;
                 return cross == 0;
@@ -105,22 +123,6 @@ public class Point implements Shape {
                 } else {
                     return false;
                 }
-            } else {
-                throw new RuntimeException("invalid " + configKey + " value " + Config.get(configKey));
-            }
-        } else if (shape instanceof Triangle) {
-            Triangle triangle = (Triangle) shape;
-            String configKey = "PointToTriangleCollision";
-
-            if (Config.get(configKey) == "half-plane") {
-                // Find what half-planes the point is on.
-                boolean b1, b2, b3;
-
-                b1 = sign(triangle.getP1(), triangle.getP2()) < 0.0;
-                b2 = sign(triangle.getP2(), triangle.getP3()) < 0.0;
-                b3 = sign(triangle.getP3(), triangle.getP1()) < 0.0;
-
-                return (b1 == b2) && (b2 == b3);
             } else {
                 throw new RuntimeException("invalid " + configKey + " value " + Config.get(configKey));
             }
@@ -146,7 +148,7 @@ public class Point implements Shape {
                 // Create a ray that runs from the point to the right and check
                 // how many of the polygon's lines it crosses.
                 Line ray = new Line(getX(), getY(), getX() + INFINITE_RAY_LENGTH, getY() + INFINITE_RAY_LENGTH);
-                ArrayList<Line> lines = polygon.getLines();
+                List<Line> lines = polygon.getLines();
 
                 int intersectionPoint = 0;
                 for (Line line : lines) {

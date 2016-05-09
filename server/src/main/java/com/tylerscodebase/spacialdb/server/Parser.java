@@ -66,6 +66,10 @@ public class Parser {
                     // We have a print statement
                     statement = new PrintStatement();
                     state = State.STATEMENT_SPECIFIC;
+                } else if (data.toUpperCase().equals("COLLIDES")) {
+                    // We have a collides statement
+                    statement = new CollidesStatement();
+                    state = State.STATEMENT_SPECIFIC;
                 } else {
                     throw new ParseException("unknown action type " + data.toUpperCase());
                 }

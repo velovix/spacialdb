@@ -94,6 +94,47 @@ public class ExecutionEnvironment {
     }
 
     /**
+     * Executes a collides statement.
+     * @return a report of the results
+     */
+    private ExecutionReport executeCollides(CollidesStatement statement) throws StatementException {
+        ExecutionReport report;
+
+        if (statement.getShape2Name() == null) {
+            // Return all shapes that collides with the given shape
+            if (!shapes.containsKey(statement.getShape1Name())) {
+                throw new StatementException("no shape exists with the name '" + statement.getShape1Name() + "'");
+            }
+
+            // Check every shape for collision
+            Shape shape = shapes.get(statement.getShape1Name());
+            List<Shape> collidingShapes = new ArrayList<>();
+            for (Map.Entry<String, Shape> s : shapes.entrySet()) {
+                if (s.getValue().collidesWith(shape)) {
+                    collidingShapes.add(s.getValue());
+                }
+            }
+
+            report = new ExecutionReport(new ShapesReportData(collidingShapes), "Found all shapes that collide with the given shape", "");
+        } else {
+            // Return true if the two shapes collide
+            if (!shapes.containsKey(statement.getShape1Name())) {
+                throw new StatementException("no shape exists with the name '" + statement.getShape1Name() + "'");
+            }
+            if (!shapes.containsKey(statement.getShape2Name())) {
+                throw new StatementException("no shape exists with the name '" + statement.getShape2Name() + "'");
+            }
+
+            Shape shape1 = shapes.get(statement.getShape1Name());
+            Shape shape2 = shapes.get(statement.getShape2Name());
+
+            report = new ExecutionReport(new BooleanReportData(shape1.collidesWith(shape2)), "Checked if the two shapes collide", "");
+        }
+
+        return report;
+    }
+
+    /**
      * Exectues a statement.
      * @param statement the statement to execute
      * @return a report of what happened

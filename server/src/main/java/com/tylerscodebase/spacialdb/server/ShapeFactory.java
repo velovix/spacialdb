@@ -1,10 +1,14 @@
 package com.tylerscodebase.spatialdb.server;
 
+import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * Contains utility functions for creating shapes from tuples.
+ */
 public class ShapeFactory {
 
-    private static Point makePoint(ArrayList<Tuple> tuples) throws StatementException {
+    private static Point makePoint(List<Tuple> tuples) throws StatementException {
         if (tuples.size() != 1) {
             throw new StatementException("expected one single tuple ((x, y)) but got " + tuples.size());
         }
@@ -19,7 +23,7 @@ public class ShapeFactory {
         return new Point(x, y);
     }
 
-    private static Line makeLine(ArrayList<Tuple> tuples) throws StatementException {
+    private static Line makeLine(List<Tuple> tuples) throws StatementException {
         if (tuples.size() != 2) {
             throw new StatementException("expected two tuples ((x1, y1) (x2, y2)) but got " + tuples.size());
         }
@@ -40,7 +44,7 @@ public class ShapeFactory {
         return new Line(x1, y1, x2, y2);
     }
 
-    private static Rectangle makeRectangle(ArrayList<Tuple> tuples) throws StatementException {
+    private static Rectangle makeRectangle(List<Tuple> tuples) throws StatementException {
         if (tuples.size() != 2) {
             throw new StatementException("expected two tuples ((x, y) (w, h)) but got " + tuples.size());
         }
@@ -67,34 +71,7 @@ public class ShapeFactory {
         return new Rectangle(x, y, w, h);
     }
 
-    private static Triangle makeTriangle(ArrayList<Tuple> tuples) throws StatementException {
-        if (tuples.size() != 3) {
-            throw new StatementException("expected three tuples ((x1, y1) (x2, y2) (x3, y3)) but got " + tuples.size());
-        }
-        if (tuples.get(0).size() != 2) {
-            throw new StatementException("expected first tuple to be of length two (x, y), but got " +
-                    tuples.get(0).size());
-        }
-        if (tuples.get(1).size() != 2) {
-            throw new StatementException("expected second tuple to be of length two (x, y), but got " +
-                    tuples.get(1).size());
-        }
-        if (tuples.get(2).size() != 2) {
-            throw new StatementException("expected third tuple to be of length two (x, y), but got " +
-                    tuples.get(2).size());
-        }
-
-        double x1 = tuples.get(0).get(0);
-        double y1 = tuples.get(0).get(1);
-        double x2 = tuples.get(1).get(0);
-        double y2 = tuples.get(1).get(1);
-        double x3 = tuples.get(2).get(0);
-        double y3 = tuples.get(2).get(1);
-
-        return new Triangle(x1, y1, x2, y2, x3, y3);
-    }
-
-    private static Circle makeCircle(ArrayList<Tuple> tuples) throws StatementException {
+    private static Circle makeCircle(List<Tuple> tuples) throws StatementException {
         if (tuples.size() != 2) {
             throw new StatementException("expected two tuples ((x, y) (r)) but got " + tuples.size());
         }
@@ -117,8 +94,8 @@ public class ShapeFactory {
         return new Circle(x, y, r);
     }
 
-    public static Polygon makePolygon(ArrayList<Tuple> tuples) throws StatementException {
-        ArrayList<Double> coords = new ArrayList<>(tuples.size() * 2);
+    public static Polygon makePolygon(List<Tuple> tuples) throws StatementException {
+        List<Double> coords = new ArrayList<>(tuples.size() * 2);
 
         for (int i=0; i<tuples.size(); i++) {
             if (tuples.get(i).size() != 2) {
@@ -133,7 +110,7 @@ public class ShapeFactory {
         return new Polygon(coords);
     }
 
-    public static Shape makeShape(ArrayList<Tuple> tuples) throws StatementException {
+    public static Shape makeShape(List<Tuple> tuples) throws StatementException {
         switch (tuples.size()) {
         case 0:
             throw new StatementException("no shape can be made with zero tuples");
@@ -143,9 +120,6 @@ public class ShapeFactory {
         case 2:
             System.out.println("Assuming the shape is a line");
             return makeLine(tuples);
-        case 3:
-            System.out.println("Assuming the shape is a triangle");
-            return makeTriangle(tuples);
         default:
             System.out.println("Assuming the shape is a polygon");
             return makePolygon(tuples);
@@ -166,8 +140,6 @@ public class ShapeFactory {
             return makeRectangle(statement.getTuples());
         case "CIRCLE":
             return makeCircle(statement.getTuples());
-        case "TRIANGLE":
-            return makeTriangle(statement.getTuples());
         default:
             throw new StatementException("unknown shape type '" + statement.getShape().toUpperCase() + "'");
         }
